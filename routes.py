@@ -58,9 +58,9 @@ def add_item(user_id, song_id, playlist_id):
 #Redirects back to the profile that issues the removal
 @app.route('/remove_item/<int:user_id>/<int:item_id>')
 def remove_item(user_id, item_id):
-   #from the Item model, fetch the item with primary key item_id to be deleted
-   #using db.session delete the item
-   #commit the deletion
+   item_to_delete = Item.query.get(item_id)
+   db.session.delete(item_to_delete)
+   db.session.commit()
    return redirect(url_for('profile', user_id = user_id))
    
 #Display the Dashboard page with a form for adding songs
