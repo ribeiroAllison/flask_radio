@@ -49,9 +49,9 @@ def add_item(user_id, song_id, playlist_id):
    my_playlist = Playlist.query.filter_by(id = user.playlist_id).first()
    if not exists(new_item, my_playlist.items):
       song = Song.query.get(song_id)
-      #using db session add the new item
-      #increase the counter for the song associated with the new item
-      #commit the database changes here
+      db.session.add(new_item)
+      song.n += 1
+      db.session.commit()
    return redirect(url_for('profile', user_id = user_id))
 
 #Remove an item from a user's playlist
