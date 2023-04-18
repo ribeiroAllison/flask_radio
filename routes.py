@@ -27,7 +27,7 @@ def exists(item, playlist):
 #renders the home.html template providing the list of current users
 @app.route('/profiles')
 def profiles():
-    current_users = [] #change here to a database query
+    current_users = User.query.all()
     return render_template('users.html', current_users = current_users)
 
 #Displays profile pages for a user with the user_id primary key
@@ -37,7 +37,7 @@ def profiles():
 def profile(user_id):
    user = User.query.filter_by(id = user_id).first_or_404(description = "No such user found.")
    songs = Song.query.all()
-   my_playlist = None #change here to a database query
+   my_playlist = Playlist.query.get(user.playlist_id)
    return render_template('profile.html', user = user, songs = songs, my_playlist = my_playlist)
 
 #Adds new songs to a user's playlist from the song library
