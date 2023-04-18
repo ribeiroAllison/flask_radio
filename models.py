@@ -21,6 +21,11 @@ class Song(db.Model):
         return "{} by {}".format(self.title, self.artist)
 
     
-#create the Item model here + add a nice representation method
+class Items(db.Model):
+  id = db.Column(db.Integer, primary_key = True)
+  song_id = db.Column(db.Integer, db.ForeignKey('song.id'))
     
-#create the Playlist model here + add a nice representation method
+class Playlist(db.Model):
+  id = db.Column(db.Integer, primary_key = True)
+  playlist_id = db.Column(db.Integer, db.ForeignKey('playlist.id'))
+  items = db.relationship('Item', backref='playlist', lazy='dynamic', cascade = "all, delete, delete-orphan")
