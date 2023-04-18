@@ -21,11 +21,13 @@ class Song(db.Model):
         return "{} by {}".format(self.title, self.artist)
 
     
-class Items(db.Model):
+class Item(db.Model):
   id = db.Column(db.Integer, primary_key = True)
   song_id = db.Column(db.Integer, db.ForeignKey('song.id'))
+  playlist_id = db.Column(db.Integer, db.ForeignKey('playlist.id'))
+  
     
 class Playlist(db.Model):
   id = db.Column(db.Integer, primary_key = True)
-  playlist_id = db.Column(db.Integer, db.ForeignKey('playlist.id'))
   items = db.relationship('Item', backref='playlist', lazy='dynamic', cascade = "all, delete, delete-orphan")
+  
